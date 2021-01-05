@@ -3,14 +3,16 @@
  * Require the library
  */
 require 'conf.php';
-require 'PHPTail.php';
+require 'TLog.php';
 /**
  * @var string $devCurDir
  * @var string $curDir
+ * @var string $extToIgnore
+ *
  */
 $curDir = $_SERVER['REMOTE_ADDR'] == '127.0.0.1' ? $devCurDir : getcwd();
 $dirMenu = array();
-$extToIgnore = ['.log','.gz', '.zip'];
+
 
 $tLogDir = strrchr($curDir, '/');
 
@@ -19,30 +21,37 @@ $curDirLog = str_replace($tLogDir, '', $curDir);
 
 $projectLog = strrchr($curDirLog, '/');
 
-$scanDirApacheLog = scandir($curDirLog . '/logs');
 
-foreach ($scanDirApacheLog as $value) {
+$scanDirApacheDir = $curDirLog . '/logs';
+if (file_exists($scanDirApacheDir)) {
+    $scanDirApacheLog = scandir($scanDirApacheDir);
 
-    if ($value != '.' & $value != '..' &  like_match($extToIgnore,$value) !=true) {
-        $dirMenu['Apache ' . $value] = $curDirLog . '/logs/' . $value;
+    foreach ($scanDirApacheLog as $value) {
+
+        if ($value != '.' & $value != '..' & like_match($extToIgnore, $value) != true) {
+            $dirMenu['Apache ' . $value] = $curDirLog . '/logs/' . $value;
+        }
     }
 }
+$scanDirSFVarDir = $curDirLog . $projectLog . '/var/log';
+if (file_exists($scanDirSFVarDir)) {
+    $scanDirSFVarLog = scandir($scanDirSFVarDir);
 
+    foreach ($scanDirSFVarLog as $value) {
 
-$scanDirSFVarLog = scandir($curDirLog . $projectLog . '/var/log');
-
-foreach ($scanDirSFVarLog as $value) {
-
-    if ($value != '.' & $value != '..' &  like_match($extToIgnore,$value) !=true) {
-        $dirMenu['/var/log/' . $value] = $curDirLog . $projectLog . '/var/log/' . $value;
+        if ($value != '.' & $value != '..' & like_match($extToIgnore, $value) != true) {
+            $dirMenu['/var/log/' . $value] = $curDirLog . $projectLog . '/var/log/' . $value;
+        }
     }
 }
+$scanDirPSVarDir = $curDirLog . $projectLog . '/var/logs';
+if (file_exists($scanDirPSVarDir)) {
+    $scanDirPSVarLog = scandir($scanDirPSVarDir);
 
 
-$scanDirPSVarLog = scandir($curDirLog . $projectLog . '/var/logs');
-
-foreach ($scanDirPSVarLog as $value) {
-    $dirMenu['/var/logs/' . $value] = $curDirLog . $projectLog . '/var/logs/' . $value;
+    foreach ($scanDirPSVarLog as $value) {
+        $dirMenu['/var/logs/' . $value] = $curDirLog . $projectLog . '/var/logs/' . $value;
+    }
 }
 
 
@@ -56,15 +65,12 @@ function like_match($extToIgnore, $subject)
     }
 
 }
-die();
+
 /**
  * Initilize a new instance of PHPTail
- * @var PHPTail
+ * @var TLog
  */
-$tail = new PHPTail(array(
-    "Access_Log" => "/var/log/httpd/access_log",
-    "Error_Log" => "/var/log/httpd/error_log",
-));
+$tail = new TLog($dirMenu);
 
 /**
  * We're getting an AJAX call

@@ -1,6 +1,6 @@
 <?php
 
-class PHPTail {
+class TLog {
 
     /**
      * Location of the log file we're tailing
@@ -97,7 +97,7 @@ class PHPTail {
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Bootstrap 101 Template</title>
+<title>TLog by KRITEK, s.r.o. (GNU GENERAL PUBLIC LICENSE)</title>
 
 <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
 <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
@@ -111,6 +111,24 @@ class PHPTail {
 <![endif]-->
 
 <style type="text/css">
+    .navbar-default {
+
+
+    background-image: linear-gradient(to bottom,#fff 0,#10079a 100%);
+    }
+    .navbar-default .navbar-brand {
+        color: #0a0000;
+    }
+    .navbar-default .navbar-nav>.open>a, .navbar-default .navbar-nav>.open>a:hover, .navbar-default .navbar-nav>.open>a:focus {
+        color: #0a0000;
+        background-color: #0d58a6;
+    }
+    .navbar-default .navbar-text {
+        color: #0a0000;
+    }
+    .navbar-default .navbar-nav li a {
+        color: #0a0000;
+    }
 #grepKeyword, #settings {
     font-size: 80%;
 }
@@ -260,7 +278,10 @@ console.log(e);
     <div class="navbar navbar-default navbar-fixed-top" role="navigation">
         <div class="container">
             <div class="navbar-header">
-                <a class="navbar-brand" href="#">PHP Tail</a>
+
+
+
+                <a class="navbar-brand" href="https://www.kritek.eu">TLog</a>
             </div>
             <div class="collapse navbar-collapse">
                 <ul class="nav navbar-nav">
@@ -276,13 +297,16 @@ console.log(e);
                     <li><span class="navbar-text" id="grepspan"></span></li>
                     <li><span class="navbar-text" id="invertspan"></span></li>
                 </ul>
-                <p class="navbar-text navbar-right" id="current"></p>
+                <p class="navbar-text navbar-right" id="current"</p>
             </div>
+
         </div>
+
     </div>
+
     <div class="contents">
         <div id="results" class="results"></div>
-        <div id="settings" title="PHPTail settings">
+        <div id="settings" title="TLog settings">
             <p>Grep keyword (return results that contain this keyword)</p>
             <input id="grep" type="text" value="" />
             <p>Should the grep keyword be inverted? (Return results that do NOT contain the keyword)</p>
@@ -291,7 +315,9 @@ console.log(e);
                 <input type="radio" value="0" id="invert2" name="invert" checked="checked" /><label for="invert2">No</label>
             </div>
         </div>
+
     </div>
+
 <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
 </body>
 </html>

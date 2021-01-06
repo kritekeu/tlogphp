@@ -50,7 +50,9 @@ if (file_exists($scanDirPSVarDir)) {
 
 
     foreach ($scanDirPSVarLog as $value) {
+        if ($value != '.' & $value != '..' & like_match($extToIgnore, $value) != true) {
         $dirMenu['/var/logs/' . $value] = $curDirLog . $projectLog . '/var/logs/' . $value;
+        }
     }
 }
 
